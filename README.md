@@ -7,11 +7,13 @@
 > pause
 > resume
 > lyrics
-> queue```
+> queue
+```
 
 # Credit
 ```bash
 > Jounny
 > iFanpS
 > FyeTopia
-> Jefri```
+> Jefri
+```
