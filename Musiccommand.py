@@ -129,7 +129,7 @@ class Music(commands.Cog):
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
 
     @commands.command()
-    async def lyrics(self, ctx):
+    async def lyric(self, ctx):
         if (ctx.author.voice):
             if ctx.voice_client:
                 name = Queue[ctx.guild.id][0].get('title', None)
