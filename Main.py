@@ -10,7 +10,7 @@ bot.remove_command("help")
 async def on_ready():
     await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Bot music [HALAL!]"))
     print("We have logged in as {0.user}\nHappy dugem. [HALAL!]".format(bot))
-    bot.load_extension('Generalcommand')
+#     bot.load_extension('Generalcommand')
     bot.load_extension('Musiccommand')
 
 @bot.event
