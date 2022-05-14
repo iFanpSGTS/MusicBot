@@ -1,5 +1,6 @@
 # MusicBot
 - Music discord that written on python3.8 & using discord.py module.
+- Don't forget to download ffmpeg to use this bot!
 
 # Commands
 ```bash
