@@ -1,3 +1,4 @@
+# This script is useless, why is this useless, because i make this just to check ping, and purge all testing message in my discord server
 from discord.ext.commands import bot
 from discord.ext import commands
 
