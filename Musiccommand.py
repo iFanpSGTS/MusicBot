@@ -78,7 +78,22 @@ class Music(commands.Cog):
 
         embed.set_footer(text="Page " + str(page_num) +"/" + str(len(queue_pages)))
         await ctx.send(embed=embed)
-
+    
+    @commands.command()
+    async def skip(self, ctx, index=0):
+        if ctx.author.voice:
+            voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
+            if index > 0:
+                if index > len(Queue[ctx.guild.id]):
+                    await ctx.send("Out of range, can't skip song!")
+                else:
+                    for i in range(index - 1):
+                        del(Queue[ctx.guild.id][0])
+            voice.stop()
+            await ctx.send("Skipped!")
+        else:
+            await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+    
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def automatic_play(self, ctx):
