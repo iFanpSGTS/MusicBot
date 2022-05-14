@@ -37,7 +37,7 @@ async def on_command_error(ctx, error):
 async def help(ctx):
     embed = discord.Embed(title = "***Help***", color = 0xa09c9c)
     embed.add_field(name = "General", value = "ping | purge", inline=False)
-    embed.add_field(name = "Music", value = "lyric | play | stop | queue | pause | resume", inline=False)
+    embed.add_field(name = "Music", value = "lyric | play | queue | pause | resume", inline=False)
     embed.set_footer(text = "Help Menu")
     await ctx.send(embed = embed)
 
