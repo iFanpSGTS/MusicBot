@@ -41,4 +41,4 @@ async def help(ctx):
     embed.set_footer(text = "Help Menu")
     await ctx.send(embed = embed)
 
-bot.run("OTY3MjcwMzM5MjA3OTE3NTY4.YmN2sw.fIt0t5UKJMZVFGTVALzowAw7UrE")
+bot.run("TOKEN")
