@@ -80,11 +80,41 @@ class Music(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def play(self, ctx, *, search):
+    @commands.has_permissions(administrator=True)
+    async def automatic_play(self, ctx):
+        if ctx.guild.id not in Queue:
+            await ctx.send("No song in queue")
+        if not (ctx.voice_client):
+            channel = ctx.message.author.voice.channel
+            voice = await channel.connect()
+        else:
+            voice = ctx.guild.voice_client
+            
         FFMPEG_OPTIONS = {
-                'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+            'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
         YDL_OPTIONS = {'format': "bestaudio"}
+
+        with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
+            if Queue[ctx.guild.id][0]['from_playlist'] == True:
+                url2 = ydl.extract_info(Queue[ctx.guild.id][0]['url'], download=False)
+                url2 = url2['formats'][0]['url']
+            else:
+                url2 = Queue[ctx.guild.id][0].get('url', None)
+            source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
+            voice.play(source)
         
+        while (voice.is_playing() or voice.is_paused()):
+            await sleep(1)
+        del(Queue[ctx.guild.id][0])
+        if len(Queue[ctx.guild.id]) != 0:
+            temp = self.bot.get_command(name='automatic_play')
+            await temp.callback(self, ctx)
+        else:
+            Queue.pop(ctx.guild.id,None)
+            await voice.disconnect()
+    
+    @commands.command()
+    async def play(self, ctx, *, search):
         query_string = urllib.parse.urlencode({
             'search_query': search
         })
@@ -114,17 +144,11 @@ class Music(commands.Cog):
             Queue[ctx.guild.id].append(
                 {'url': info['formats'][0]['url'], 'title': info['title'], 'from_playlist': False})
             
-            await ctx.send(f'New selection is added!\nQueue selection is now {len(Queue[ctx.guild.id])}')
+            await ctx.send(f'New selection is added!\nQueue selection is now **{len(Queue[ctx.guild.id])}**')
             
             if not (voice.is_playing() or voice.is_paused()):
-                with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-                    if Queue[ctx.guild.id][0]['from_playlist'] == True:
-                        url2 = ydl.extract_info(Queue[ctx.guild.id][0]['url'], download=False)
-                        url2 = url2['formats'][0]['url']
-                    else:
-                        url2 = Queue[ctx.guild.id][0].get('url', None)
-                source = await discord.FFmpegOpusAudio.from_probe(url2, **FFMPEG_OPTIONS)
-                voice.play(source)
+                temp = self.bot.get_command(name='automatic_play')
+                await temp.callback(self, ctx)
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
 
