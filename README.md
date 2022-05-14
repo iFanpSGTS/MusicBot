@@ -8,6 +8,7 @@
 > resume
 > lyrics
 > queue
+> skip (new update)
 ```
 
 # Credit
