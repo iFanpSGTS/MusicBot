@@ -1,7 +1,7 @@
 from discord.ext.commands import bot
 from discord.ext import commands
 
-class usefulFunctions(commands.Cog):
+class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
@@ -15,4 +15,4 @@ class usefulFunctions(commands.Cog):
         await ctx.channel.purge(limit=amount)
 
 def setup(bot):
-    bot.add_cog(usefulFunctions(bot))
+    bot.add_cog(General(bot))
