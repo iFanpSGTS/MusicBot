@@ -107,8 +107,7 @@ class Music(commands.Cog):
             await sleep(1)
         del(Queue[ctx.guild.id][0])
         if len(Queue[ctx.guild.id]) != 0:
-            temp = self.bot.get_command(name='automatic_play')
-            await temp.callback(self, ctx)
+            await self.bot.get_command(name='automatic_play').callback(self, ctx)
         else:
             Queue.pop(ctx.guild.id,None)
             await voice.disconnect()
@@ -147,8 +146,7 @@ class Music(commands.Cog):
             await ctx.send(f'New selection is added!\nQueue selection is now **{len(Queue[ctx.guild.id])}**')
             
             if not (voice.is_playing() or voice.is_paused()):
-                temp = self.bot.get_command(name='automatic_play')
-                await temp.callback(self, ctx)
+                await self.bot.get_command(name='automatic_play').callback(self, ctx)
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
 
