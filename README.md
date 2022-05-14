@@ -12,7 +12,7 @@
 
 # Credit
 ```bash
-> Jounny
+> Jounny (https://github.com/Jounnyy)
 > iFanpS
 > FyeTopia
 > Jefri
