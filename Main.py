@@ -24,11 +24,11 @@ async def on_message(message):
    
 @bot.event
 async def on_member_join(member):
-    print(f'Hi! {member} if u want to hear music with this bot please type **{prefix}play [music]**')
+    await member.send(f'Hi! {member} if u want to hear music with this bot please type **{prefix}play [music]**')
 
 @bot.event
 async def on_member_remove(member):
-    print(f'Goodbye {member}!')
+    await member.send(f'Goodbye {member}!')
 
 @bot.event
 async def on_command_error(ctx, error):
