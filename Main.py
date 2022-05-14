@@ -14,6 +14,15 @@ async def on_ready():
     bot.load_extension('Musiccommand')
 
 @bot.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    
+    if message.content.startswith(prefix+'automatic_play'):
+        return
+    await bot.process_commands(message)
+   
+@bot.event
 async def on_member_join(member):
     print(f'Hi! {member} if u want to hear music with this bot please type **{prefix}play [music]**')
 
