@@ -12,7 +12,7 @@ bot.remove_command("help")
 async def on_ready():
     await bot.change_presence(status=discord.Status.dnd, activity=discord.Game("Bot music [HALAL!]"))
     print("We have logged in as {0.user}\nHappy dugem. [HALAL!]".format(bot))
-    bot.load_extension('Generalcommand')
+#     bot.load_extension('Generalcommand')
     bot.load_extension('Musiccommand')
     
 @bot.event
@@ -27,14 +27,6 @@ async def on_message(message):
     if message.content.startswith(prefix+'automatic_play'):
         return
     await bot.process_commands(message)
-   
-@bot.event
-async def on_member_join(member):
-    await member.send(f'Hi! {member} if u want to hear music with this bot please type **{prefix}play [music]**')
-
-@bot.event
-async def on_member_remove(member):
-    await member.send(f'Goodbye {member}!')
 
 @bot.event
 async def on_command_error(ctx, error):
