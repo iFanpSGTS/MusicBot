@@ -10,6 +10,8 @@
 > lyrics
 > queue
 > skip (new update)
+> join (new update)
+> leave (new update)
 ```
 
 # Credit
