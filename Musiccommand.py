@@ -15,6 +15,27 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    @commands.command()
+    async def join(self, ctx):
+        #ctx.message.author.voice.channel
+        if ctx.author.voice:
+            channel = ctx.message.author.voice.channel
+            await channel.connect()
+            await ctx.send("Connected to a voice channel")
+        else:
+            await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+    
+    @commands.command()
+    async def leave(self, ctx):
+        if ctx.author.voice:
+            if ctx.voice_client:
+                await ctx.send("Leaving the voice channel")
+                await ctx.guild.voice_client.disconnect()
+            else:
+                await ctx.send("I am not in a voice channel!")  
+        else:
+            await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+    
     @commands.command(pass_context=True)
     async def pause(self, ctx):
         if (ctx.author.voice):
