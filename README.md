@@ -5,7 +5,7 @@
 # Commands
 ```bash
 > play | func (play song by query or link)
-> pause | func (pause the played sng)
+> pause | func (pause the played song)
 > resume | func (play the paused song)
 > lyrics | func (see lyrics {not 100% work, sometimes it can show the wrong lyrics})
 > queue | func (see the list of the queue)
