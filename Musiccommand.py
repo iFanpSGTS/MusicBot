@@ -193,7 +193,7 @@ class Music(commands.Cog):
             Queue[ctx.guild.id].append(
                 {'url': info['formats'][0]['url'], 'title': info['title'], 'from_playlist': False})
             
-            await ctx.send(f'New selection is added!\nQueue selection is now **{len(Queue[ctx.guild.id])}**')
+            await ctx.send(f'Now play ***{Queue[ctx.guild.id][0]["title"]}***\nSong ^^^ added ^^^ to queue')
             
             if not (voice.is_playing() or voice.is_paused()):
                 await self.bot.get_command(name='automatic_play').callback(self, ctx)
