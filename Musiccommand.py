@@ -9,7 +9,6 @@ import youtube_dl
 import aiohttp
 
 Queue = {}
-LYRICS_URL = "https://some-random-api.ml/lyrics?title="
 
 class Music(commands.Cog):
     def __init__(self, bot):
@@ -199,52 +198,24 @@ class Music(commands.Cog):
                 await self.bot.get_command(name='automatic_play').callback(self, ctx)
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
-
     @commands.command()
-    async def lyric(self, ctx, *, song=None):
-        if (ctx.author.voice):
-            if ctx.voice_client:
-                if song == None:
-                    name = Queue[ctx.guild.id][0].get('title', None)
-                    async with ctx.typing():
-                        async with aiohttp.request("GET", LYRICS_URL + name, headers={}) as r:
-                            if not 200 <= r.status <= 299:
-                                await ctx.send(f"No lyrics found with this --> **Title** [***{name}***]")
-
-                            data = await r.json()
-
-                            embed = discord.Embed(
-                                title = data["title"],
-                                description = data["lyrics"],
-                                colour=0xa09c9c,
-                            )
-                            
-                            embed.set_thumbnail(url=data["thumbnail"]["genius"])
-                            embed.set_author(name=data["author"])
-                            embed.set_footer(text = "Lyric music")
-                            await ctx.send(embed=embed)
-                else:
-                    async with ctx.typing():
-                        async with aiohttp.request("GET", LYRICS_URL + song, headers={}) as r:
-                            if not 200 <= r.status <= 299:
-                                await ctx.send(f"No lyrics found with this --> **Title** [***{song}***]")
-
-                            data = await r.json()
-
-                            embed = discord.Embed(
-                                title = data["title"],
-                                description = data["lyrics"],
-                                colour=0xa09c9c,
-                            )
-                            
-                            embed.set_thumbnail(url=data["thumbnail"]["genius"])
-                            embed.set_author(name=data["author"])
-                            embed.set_footer(text = "Lyric music")
-                            await ctx.send(embed=embed)
-            else:
-                return await ctx.send("I am not connected to a voice channel.")
+    async def lyric(self, ctx):
+        if ctx.author.voice:
+            sng = Queue[ctx.guild.id][0]["title"].split('-')
+            async with aiohttp.request("GET", f"https://api.lyrics.ovh/v1/{sng[0]}/{sng[1]}", headers={}) as r:
+                if r.status != 200:
+                    await ctx.send(f"No lyrics found with this --> **Title** [***{sng[1]}***]")
+                data = await r.json()
+                embed = discord.Embed(
+                    title = sng[1],
+                    description = data["lyrics"],
+                    colour=0xa09c9c,
+                )
+                embed.set_author(name=sng[0])
+                embed.set_footer(text="Lyric music")
+                await ctx.send(embed=embed)
         else:
-            return await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")            
+            return await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")           
 
 def setup(bot):
     bot.add_cog(Music(bot))
