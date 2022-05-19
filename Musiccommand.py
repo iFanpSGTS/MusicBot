@@ -15,6 +15,20 @@ class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    @commands.command() 
+    async def stop(self, ctx):
+        if ctx.author.voice:
+            if ctx.voice_client:
+                voice = ctx.guild.voice_client
+                for i in range(len(Queue[ctx.guild.id]) - 1):
+                    del(Queue[ctx.guild.id][i])
+                voice.stop()
+                await ctx.send("All music stopped. and deleted from Queue!")
+            else:
+                await ctx.send("I am not in a voice channel!")
+        else:
+            await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+    
     @commands.command()
     async def join(self, ctx):
         #ctx.message.author.voice.channel
