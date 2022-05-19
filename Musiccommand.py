@@ -60,7 +60,7 @@ class Music(commands.Cog):
                 await sleep(500)  
                 if ctx.voice_client and ctx.guild.voice_client.is_paused():
                     await ctx.send("Paused is too long!")
-                    ctx.guild.voice_client.disconnect()
+                    await ctx.guild.voice_client.disconnect()
             else:
                 await ctx.send("There is no music to pause!")
         else:
