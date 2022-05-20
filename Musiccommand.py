@@ -164,6 +164,8 @@ class Music(commands.Cog):
             voice = ctx.guild.voice_client
             if index > len(Queue[ctx.guild.id]):
                 await ctx.send("Out of range, can't skip song!")
+            if len(Queue[ctx.guild.id]) == 1:
+                await ctx.send("Can't skip song, min : 2 song in queue!")
             else:
                 msg = await ctx.send("3 react & song will be skipped, waiting for 10 sec.")
                 await msg.add_reaction("☑️")
@@ -181,11 +183,13 @@ class Music(commands.Cog):
                 
                 if len(reaction) == 0:
                     await ctx.send("No one react/agree, song will not skipped.")
-                if len(reaction) >= 3:
+                if len(reaction) == 2:
+                    await ctx.send("Just 2 people react, song will not skipped.")
+                if len(reaction) >= 1:
                     for i in range(index - 1):
                         del(Queue[ctx.guild.id][index])
-                voice.stop()
-                await ctx.send("Song skipped!")
+                    voice.stop()
+                    await ctx.send("Song skipped!")
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
     
