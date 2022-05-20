@@ -185,7 +185,7 @@ class Music(commands.Cog):
                     await ctx.send("No one react/agree, song will not skipped.")
                 if len(reaction) == 2:
                     await ctx.send("Just 2 people react, song will not skipped.")
-                if len(reaction) >= 1:
+                if len(reaction) >= 3:
                     for i in range(index - 1):
                         del(Queue[ctx.guild.id][index])
                     voice.stop()
