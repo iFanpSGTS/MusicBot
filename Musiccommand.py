@@ -161,15 +161,31 @@ class Music(commands.Cog):
     @commands.command()
     async def skip(self, ctx, index=0):
         if ctx.author.voice:
-            voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
-            if index > 0:
-                if index > len(Queue[ctx.guild.id]):
-                    await ctx.send("Out of range, can't skip song!")
-                else:
+            voice = ctx.guild.voice_client
+            if index > len(Queue[ctx.guild.id]):
+                await ctx.send("Out of range, can't skip song!")
+            else:
+                msg = await ctx.send("3 react & song will be skipped, waiting for 10 sec.")
+                await msg.add_reaction("☑️")
+                
+                times = 10
+                while True:
+                    times -= 1
+                    if times == 0:
+                        break
+                    await sleep(1)
+                    
+                fetch = await ctx.channel.fetch_message(msg.id)
+                reaction = await fetch.reactions[0].users().flatten()
+                reaction.pop(reaction.index(ctx.guild.me)) #remove bot from reaction, so bot will not be detected as user
+                
+                if len(reaction) == 0:
+                    await ctx.send("No one react/agree, song will not skipped.")
+                if len(reaction) >= 1:
                     for i in range(index - 1):
-                        del(Queue[ctx.guild.id][0])
-            voice.stop()
-            await ctx.send("Skipped!")
+                        del(Queue[ctx.guild.id][index])
+                voice.stop()
+                await ctx.send("Song skipped!")
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
     
