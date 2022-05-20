@@ -42,9 +42,12 @@ async def on_command_error(ctx, error):
 
 @bot.command(invoke_without_command = True)
 async def help(ctx):
+    tip = [" - !play (query or link) to play a music", " - DM iFanpS#5409 if u want to contribute", " - Use headphone for better experience"
+           " - Don't leave while bot is playing a music, bot will sad ;(", " - Listening music together will be fun 🥳"]
+    await ctx.send("Tip"+random.choice(tip)+"\n")
     embed = discord.Embed(title = "***Help***", color = 0xa09c9c)
-#     embed.add_field(name = "General", value = "ping | purge", inline=False)
-    embed.add_field(name = "Music", value = "lyric | play | queue | pause | resume | skip | join | leave", inline=False)
+    embed.add_field(name = "General", value = "ping | purge", inline=False)
+    embed.add_field(name = "Music", value = "lyric | play | stop | queue | pause | resume", inline=False)
     embed.set_footer(text = "Help Menu")
     await ctx.send(embed = embed)
 
