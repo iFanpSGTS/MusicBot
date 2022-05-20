@@ -1,5 +1,50 @@
-import discord
-from discord.ext.commands import bot
+                                                                            # @commands.command()
+                                                                            # async def lyrics(self, ctx, *, song=None):
+                                                                            #     if (ctx.author.voice):
+                                                                            #         if ctx.voice_client:
+                                                                            #             if song == None:
+                                                                            #                 name = Queue[ctx.guild.id][0].get('title', None)
+                                                                            #                 async with ctx.typing():
+                                                                            #                     async with aiohttp.request("GET", "https://some-random-api.ml/lyrics?title=" + name, headers={}) as r:
+                                                                            #                         if not 200 <= r.status <= 299:
+                                                                            #                             await ctx.send(f"No lyrics found with this --> **Title** [***{name}***]")
+
+                                                                            #                         data = await r.json()
+
+                                                                            #                         embed = discord.Embed(
+                                                                            #                             title = data["title"],
+                                                                            #                             description = data["lyrics"],
+                                                                            #                             colour=0xa09c9c,
+                                                                            #                         )
+
+                                                                            #                         embed.set_thumbnail(url=data["thumbnail"]["genius"])
+                                                                            #                         embed.set_author(name=data["author"])
+                                                                            #                         embed.set_footer(text = "Lyric music")
+                                                                            #                         await ctx.send(embed=embed)
+                                                                            #             else:
+                                                                            #                 async with ctx.typing():
+                                                                            #                     async with aiohttp.request("GET", "https://some-random-api.ml/lyrics?title=" + song, headers={}) as r:
+                                                                            #                         if not 200 <= r.status <= 299:
+                                                                            #                             await ctx.send(f"No lyrics found with this --> **Title** [***{song}***]")
+
+                                                                            #                         data = await r.json()
+
+                                                                            #                         embed = discord.Embed(
+                                                                            #                             title = data["title"],
+                                                                            #                             description = data["lyrics"],
+                                                                            #                             colour=0xa09c9c,
+                                                                            #                         )
+
+                                                                            #                         embed.set_thumbnail(url=data["thumbnail"]["genius"])
+                                                                            #                         embed.set_author(name=data["author"])
+                                                                            #                         embed.set_footer(text = "Lyric music")
+                                                                            #                         await ctx.send(embed=embed)
+                                                                            #         else:
+                                                                            #             return await ctx.send("I am not connected to a voice channel.")
+                                                                            #     else:
+                                                                            #         return await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+import discord                                                                              
+from discord.ext.commands import bot       
 from discord.ext import commands
 from asyncio import sleep
 import urllib.parse
