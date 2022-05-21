@@ -170,12 +170,7 @@ class Music(commands.Cog):
                 msg = await ctx.send("3 react & song will be skipped, waiting for 10 sec.")
                 await msg.add_reaction("☑️")
                 
-                times = 10
-                while True:
-                    times -= 1
-                    if times == 0:
-                        break
-                    await sleep(1)
+                await sleep(10)
                     
                 fetch = await ctx.channel.fetch_message(msg.id)
                 reaction = await fetch.reactions[0].users().flatten()
@@ -260,12 +255,13 @@ class Music(commands.Cog):
             if len(Queue[ctx.guild.id]) == 1:
                 await ctx.send(f'Now play ***{Queue[ctx.guild.id][0]["title"]}***\nSong ^^^ added ^^^ to queue')
             if len(Queue[ctx.guild.id]) >= 2:
-                await ctx.send("Song added to queue!")
+                await ctx.send(f"Song added to queue! : [***{Queue[ctx.guild.id][len(Queue[ctx.guild.id])]['title']}***]")
             
             if not (voice.is_playing() or voice.is_paused()):
                 await self.bot.get_command(name='automatic_play').callback(self, ctx)
         else:
             await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
+            
     @commands.command()
     async def lyric(self, ctx):
         if ctx.author.voice:
